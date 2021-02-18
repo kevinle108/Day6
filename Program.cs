@@ -7,34 +7,23 @@ namespace Day6
     {
         static void Main(string[] args)
         {
-
-            int num1, num2, num3;
-            int originalNum1, originalNum2, originalNum3;
+            int input;
+            List<int> numsList = new List<int> {};
             while (true)
             {
-                Console.Write("Enter the first number: ");
-                if (Int32.TryParse(Console.ReadLine(), out num1) && num1 > 0) break;
-                else Console.WriteLine("Invalid input!");
+                Console.Write("Enter a positive integer: ");
+                if (int.TryParse(Console.ReadLine(), out input) && input > 0)
+                {
+                    numsList.Add(input);
+                } else
+                {
+                    // prevents users from entering 0 when there is not enough numbers to find a GCD & LCM 
+                    // need at least two values
+                    if (input == 0 && numsList.Count >= 2) break; 
+                    Console.WriteLine("Invalid input!");
+                }
             }
-            while (true)
-            {
-                Console.Write("Enter the second number: ");
-                if (Int32.TryParse(Console.ReadLine(), out num2) && num2 > 0) break;
-                else Console.WriteLine("Invalid input!");
-            }
-            while (true)
-            {
-                Console.Write("Enter the second number: ");
-                if (Int32.TryParse(Console.ReadLine(), out num3) && num3 > 0) break;
-                else Console.WriteLine("Invalid input!");
-            }
-            originalNum1 = num1; 
-            originalNum2 = num2;
-            originalNum3 = num3;
-
-            List<int> numsList = new List<int> { num1, num2, num3 };
             int index, gcd, lcm;
-            
             gcd = findGCD(numsList[0], numsList[1]);
             lcm = (numsList[0] * numsList[1]) / gcd;
             index = 2;
@@ -42,12 +31,12 @@ namespace Day6
                 int prevGCD = gcd;
                 int prevLCM = lcm;
                 gcd = findGCD(prevGCD, numsList[index]);
-                lcm = (prevLCM * numsList[index]) / gcd;
+                lcm = (prevLCM * numsList[index]) / findGCD(prevLCM, numsList[index]);
                 index++;
             }
-            Console.WriteLine($"\nThe GCD is {gcd}.");
-            Console.WriteLine($"The LCM is {lcm}.");
-
+            Console.WriteLine("Your numbers were: " + string.Join(", ", numsList) + ".");
+            Console.WriteLine($"\nGCD = {gcd}.");
+            Console.WriteLine($"LCM = {lcm}.");
 
             ///// FUNCTIONS /////
             int findGCD(int num1, int num2)
