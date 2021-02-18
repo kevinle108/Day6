@@ -15,7 +15,8 @@ namespace Day6
                 if (int.TryParse(Console.ReadLine(), out input) && input > 0)
                 {
                     numsList.Add(input);
-                } else
+                } 
+                else
                 {
                     // prevents users from entering 0 when there is not enough numbers to find a GCD & LCM 
                     // need at least two values
@@ -27,7 +28,8 @@ namespace Day6
             gcd = findGCD(numsList[0], numsList[1]);
             lcm = (numsList[0] * numsList[1]) / gcd;
             index = 2;
-            while (index < numsList.Count) {
+            while (index < numsList.Count) 
+            {
                 int prevGCD = gcd;
                 int prevLCM = lcm;
                 gcd = findGCD(prevGCD, numsList[index]);
