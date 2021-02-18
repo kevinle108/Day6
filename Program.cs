@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Day6
 {
@@ -6,43 +7,60 @@ namespace Day6
     {
         static void Main(string[] args)
         {
-            // find the Greatest Common Divisor (GCD) between two numbers
-            // initialize 3 variables
-            // take the remainder until num3 is 0
-            // GCD is num2
-
-            // also find the Least Common Multiple (LCM) between two numbers
-            // LCD = (num1 * num2) / GCD
 
             int num1, num2, num3;
-            int originalNum1, originalNum2;
-            bool validInput;
-            do
+            int originalNum1, originalNum2, originalNum3;
+            while (true)
             {
-                validInput = false;
                 Console.Write("Enter the first number: ");
-                if (Int32.TryParse(Console.ReadLine(), out num1)) validInput = true; 
+                if (Int32.TryParse(Console.ReadLine(), out num1) && num1 > 0) break;
                 else Console.WriteLine("Invalid input!");
-            } while (!validInput);
-            do
+            }
+            while (true)
             {
-                validInput = false;
                 Console.Write("Enter the second number: ");
-                if (Int32.TryParse(Console.ReadLine(), out num2)) validInput = true;
+                if (Int32.TryParse(Console.ReadLine(), out num2) && num2 > 0) break;
                 else Console.WriteLine("Invalid input!");
-            } while (!validInput);
+            }
+            while (true)
+            {
+                Console.Write("Enter the second number: ");
+                if (Int32.TryParse(Console.ReadLine(), out num3) && num3 > 0) break;
+                else Console.WriteLine("Invalid input!");
+            }
             originalNum1 = num1; 
             originalNum2 = num2;
+            originalNum3 = num3;
+
+            List<int> numsList = new List<int> { num1, num2, num3 };
+            int index, gcd, lcm;
             
-            num3 = num1 % num2;
-            while (num3 != 0)
-            {
-                num1 = num2;
-                num2 = num3;
-                num3 = num1 % num2;
+            gcd = findGCD(numsList[0], numsList[1]);
+            lcm = (numsList[0] * numsList[1]) / gcd;
+            index = 2;
+            while (index < numsList.Count) {
+                int prevGCD = gcd;
+                int prevLCM = lcm;
+                gcd = findGCD(prevGCD, numsList[index]);
+                lcm = (prevLCM * numsList[index]) / gcd;
+                index++;
             }
-            Console.WriteLine($"The GCD of {originalNum1} and {originalNum2} is {num2}.");
-            Console.WriteLine($"The LCM of {originalNum1} and {originalNum2} is {(originalNum1 * originalNum2) / num2}.");
+            Console.WriteLine($"\nThe GCD is {gcd}.");
+            Console.WriteLine($"The LCM is {lcm}.");
+
+
+            ///// FUNCTIONS /////
+            int findGCD(int num1, int num2)
+            {
+                int num3 = num1 % num2;
+                while (num3 != 0)
+                {
+                    num1 = num2;
+                    num2 = num3;
+                    num3 = num1 % num2;
+                }
+                return num2;
+            }
         }
     }
 }
