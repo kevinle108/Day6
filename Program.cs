@@ -17,18 +17,14 @@ namespace Day6
             {
                 validInput = false;
                 Console.Write("Enter the first number: ");
-                if (Int32.TryParse(Console.ReadLine(), out num1)) {
-                    validInput = true;
-                } else Console.WriteLine("Invalid input!");
+                if (Int32.TryParse(Console.ReadLine(), out num1)) validInput = true; 
+                else Console.WriteLine("Invalid input!");
             } while (!validInput);
             do
             {
                 validInput = false;
                 Console.Write("Enter the second number: ");
-                if (Int32.TryParse(Console.ReadLine(), out num2))
-                {
-                    validInput = true;
-                }
+                if (Int32.TryParse(Console.ReadLine(), out num2)) validInput = true;
                 else Console.WriteLine("Invalid input!");
             } while (!validInput);
             Console.Write($"The GCD of {num1} and {num2} is ");
